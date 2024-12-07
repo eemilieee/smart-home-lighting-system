@@ -184,7 +184,7 @@ def submitData():
         state = info[0]
         light_val = int(info[1])
 
-        # bec-ul meu e prea vechi si nu ii pot afla programatic temperatura culorii; 2700 e valoarea din specificatii
+        # becul meu e prea vechi si nu ii pot afla programatic temperatura culorii; 2700 e valoarea din specificatii
         # color_temp = int(info[2])
         color_temp = 2700
 
