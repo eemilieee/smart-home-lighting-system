@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart home lighting system</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Evolution of light intensity in time, based on data stored in the database</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+        $(document).ready(function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Light intensity',
+                            data: [],
+                            borderColor: 'rgba(255, 0, 0, 1)',
+                            backgroundColor: 'rgba(255, 0, 0, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Light brightness',
+                            data: [],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Lightbulb state',
+                            data: [],
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            backgroundColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            function updateChart() {
+                $.getJSON('/getDBData', function(data) {
+
+                    console.log("data", data);
+
+                    var labels = data.map(item => item[1]);
+                    var lightValues = data.map(item => item[3]);
+                    var lightIntensities = data.map(item => item[4]);
+                    var states = data.map(item => item[2] == 'off' ? 0 : 1);
+
+                    console.log("labels", labels);
+                    console.log("lightValues", lightValues);
+                    console.log("states", states);
+
+                    myChart.data.labels = labels;
+                    myChart.data.datasets[1].data = lightValues;
+                     myChart.data.datasets[0].data = lightIntensities;
+                    myChart.data.datasets[2].data = states;
+                    myChart.update();
+                });
+            }
+
+            // Initial chart update
+            updateChart();
+
+            // Update the chart every 5 seconds
+            setInterval(updateChart, 5000);
+        });
+    </script>
+</body>
+</html>

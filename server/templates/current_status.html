@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart home lighting system</title>
+</head>
+<body>
+{% block body %}
+    {% if err == false %}
+     <p> Power status: {{ power }} </p>
+     <p> Brightness value: {{ bright }} % </p>
+    {% else %}
+     <p> {{ res }} </p>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

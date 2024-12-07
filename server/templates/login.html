@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart home lighting system</title>
+</head>
+<body>
+{% block content %}
+    <h1>Login using the light bulb's IP address and token</h1>
+    <form method="post">
+        <label for="ip">IP address</label>
+        <br>
+        <input type="text" name="ip" size="20"
+               placeholder="IP address"
+               value="{{ request.form['ip'] }}" />
+        <br>
+
+        <label for="token">Token</label>
+        <br>
+        <input type="text" name="token" size="35"
+               placeholder="Token"
+               value="{{ request.form['token'] }}" />
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
+</body>
+</html>

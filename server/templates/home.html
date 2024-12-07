@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart home lighting system</title>
+    <h1>These are the main operations you can apply to the smart light bulb:</h1>
+    <ul>
+        <li><button><a href="{{ url_for('turnOn') }}">Turn on the lightbulb</a></button></li>
+        <li><button><a href="{{ url_for('turnOff') }}">Turn off the lightbulb</a></button></li>
+        <li><button><a href="{{ url_for('setBrightness') }}">Set a new brightness value for the lightbulb</a></button></li>
+        <li><button><a href="{{ url_for('currentStatus') }}">Find out the light bulb's information!</a></button></li>
+        <li><button><a href="{{ url_for('showGraph') }}">Find out light intensity graph</a></button></li>
+        <li><button><a href="{{ url_for('twinkle') }}">Twinkle!</a></button></li>
+    </ul>
+</head>
+<body>
+
+</body>
+</html>
