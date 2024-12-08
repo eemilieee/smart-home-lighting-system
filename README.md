@@ -3,7 +3,7 @@
 ## Structura retelei in linii mari
 
 Datele de la senzorul de lumina sunt preluate si prelucrate cu ajutorul unui microcontroller de tip ESP32, programat pentru simplitate in MicroPython. Acestea
-sunt trimise pe cale wireless catre serverul central (ce ruleaza pe laptop-ul personal) ce expune o interfata web utilizatorului pentru a vizualiza
+sunt trimise pe cale wireless catre serverul central (care ruleaza pe laptop-ul personal) ce expune o interfata web utilizatorului pentru a vizualiza
 datele despre intensitatea luminii si a lua decizii asupra actuatorului (pornire/oprire, setare luminiozitate, determinarea parametrilor acestuia, aplicarea
 modului twinkle). Actuatorul (un bec inteligent) este si el controlat la randul lui prin intermediul Wi-Fi. Toate aceste componente sunt conectate la aceeasi
 retea pentru a asigura buna functionare, fiind necesare informatiile despre aceasta (SSID si parola pentru conectare). In afara de aceste detalii este nevoie
@@ -12,12 +12,12 @@ si de aflarea IP-ului si token-ului unic (stabilit la inregistrarea dispozitivul
 ## Preluarea datelor de la senzor si transmiterea lor catre server
 
 Inainte de stabilirea conexiunii si transmiterea efectiva a datelor se determina urmatoarele constante:
-- SSID-ul router-ului de Wi-Fi din reteaua locala
-- parola retelei
-- date despre server-ul ce ruleaza pe laptopul personal
-- adresa IP (aflata in timpul rularii)
-- portul pe care ruleaza (fixat la runtime)
-- URL-ul la care se trimit datele, de forma "http://{SERVER_IP}:{SERVER_PORT}/< calea operatiei de primire a datelor definita in cadrul serverului >"
+- SSID-ul router-ului de Wi-Fi din reteaua locala;
+- parola retelei;
+- date despre server-ul ce ruleaza pe laptopul personal;
+- adresa IP (aflata in timpul rularii);
+- portul pe care ruleaza (fixat la runtime);
+- URL-ul la care se trimit datele, de forma "http://{SERVER_IP}:{SERVER_PORT}/< calea operatiei de primire a datelor definita in cadrul serverului >".
 
 Logica programului este urmatoarea:
 1. se realizeaza conexiunea microcontroller-ului la reteaua Wi-Fi locala;
@@ -29,13 +29,13 @@ Logica programului este urmatoarea:
 Modalitatea aleasa de realizare a serverului este cea reprezentata de utilizarea framework-ului Flask, intrucat se integreaza facil baza de date SQLite3 si functionalitatea se redacteaza in mod intuitiv, cu ajutorul rutelor. Fiecare ruta defineste cate o operatie expusa de interfata web construita cu ajutorul template-urilor HTML:
 - / -> pagina principala a aplicatiei, care expune butoane pentru alegerea actiunii de catre utilizator;
 - /login -> introducerea IP-ului si token-ului aferente becului (nu se poate trece la pagina de pornire fara acestea);
-- /turn-on -> se trimite comanda de pornire a becului
-- /turn-off -> se trimite comanda de stingere a becului
-- /set-brightness -> se trimite comanda de actualizare a luminiozitatii becului conform valorii introduse de utilizator in pagina
-- /adjust-brightness -> se trimite comanda de actualizare a luminiozitatii becului conform ultimei valori citite de la senzor
-- /current-status -> se trimite comanda de determinare a starii curente a becului (daca este pornit/oprit si procentul de luminiozitate)
-- /visualizeData -> se construieste graficul intensitatii luminoase din incapere, al statusului becului si a gradului de luminiozitate a becului in functie de timp, care se actualizeaza in timp real pe masura ce senzorul citeste datele si sunt introduse in baza de date
-- /twinkle -> se trimite comanda de creare a unui efect luminos pentru bec: clipire de 3 ori
+- /turn-on -> se trimite comanda de pornire a becului;
+- /turn-off -> se trimite comanda de stingere a becului;
+- /set-brightness -> se trimite comanda de actualizare a luminiozitatii becului conform valorii introduse de utilizator in pagina;
+- /adjust-brightness -> se trimite comanda de actualizare a luminiozitatii becului conform ultimei valori citite de la senzor;
+- /current-status -> se trimite comanda de determinare a starii curente a becului (daca este pornit/oprit si procentul de luminiozitate);
+- /visualizeData -> se construieste graficul intensitatii luminoase din incapere, al statusului becului si a gradului de luminiozitate a becului in functie de timp, care se actualizeaza in timp real pe masura ce senzorul citeste datele si sunt introduse in baza de date;
+- /twinkle -> se trimite comanda de creare a unui efect luminos pentru bec: clipire de 3 ori.
 
 Pentru afisarea graficului s-a folosit framework-ul Chart.js, intrucat este usor de incorporat in template-ul HTML. Valorile introduse in grafic sunt preluate direct din baza de date cu ajutorul rutei /getDBData (ce aplica un query de SELECT asupra tabelei). Microcontroller-ul trimite cereri de tip POST serverului la ruta /submit ce contin valorile intensitatii luminoase; payload-ul este extras si introdus in baza de date alaturi de data la care
 au ajuns cererile, starea becului, luminiozitatea lui curenta si temperatura culorii.
