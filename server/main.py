@@ -1,9 +1,12 @@
+import requests
 from flask import Flask, render_template, request, g, jsonify, redirect, url_for
 import sqlite3
 from miio import Device
 import asyncio
+import statistics
+from statsmodels.tsa.arima.model import ARIMA
 
-# requirements: instalat miio (-> doc oficiala), flask, 'flask[async]'
+# requirements: instalat miio (-> doc oficiala), flask, 'flask[async]', statsmodel
 
 app = Flask(__name__)
 DATABASE = 'database.db'
@@ -12,6 +15,22 @@ DATABASE = 'database.db'
 ip = ""
 token = ""
 dev = None
+
+# informatii despre bot-ul de Telegram
+bot_token = ""
+chat_id = ""
+
+
+def send_telegram_message(message):
+    global bot_token, chat_id
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {"chat_id": chat_id, "text": message}
+    try:
+        response = requests.post(url, json=payload)
+        response.close()
+        print("Message sent successfully!")
+    except Exception as e:
+        print(f"Error sending message: {e}")
 
 
 def isLoggedIn():
@@ -55,9 +74,11 @@ def login():
     if request.method == 'POST':
         data = request.form
 
-        global ip, token, dev
+        global ip, token, dev, bot_token, chat_id
         ip = data['ip']
         token = data['token']
+        bot_token = data['bot_token']
+        chat_id = data['chat_id']
         dev = Device(ip, token, timeout=10)
 
         return redirect(url_for('home'))
@@ -102,6 +123,44 @@ def showEntries():
 
         entries = cur.fetchall()
         return jsonify(entries)
+
+
+@app.route("/getStatistics")
+def showStatistics():
+    with app.app_context():
+        global bot_token, chat_id
+
+        mean = ""
+        res = ""
+        difvals = ""
+
+        db = getDB()
+
+        cur = db.execute('SELECT light_intensity FROM entries')
+
+        entries = cur.fetchall()
+
+        if len(entries) < 2:
+            return render_template("statistics.html", res=res, mean=mean, difvals=difvals)
+
+        vals = [x[0] for x in entries]
+
+        model = ARIMA(vals, order=(5, 1, 0))
+        model_fit = model.fit()
+        output = model_fit.forecast()
+        res = "The next value of the light intensity should be " + str(output[0])
+        mean = "The mean value of all the registered intensities is " + str(statistics.fmean(vals))
+        difvals = "The different values of all registered intensities are " + str(statistics.multimode(vals))
+
+        if bot_token != "" and chat_id != "":
+            send_telegram_message(res)
+            send_telegram_message(mean)
+            send_telegram_message(difvals)
+
+        if res == "" or mean == "" or difvals == "":
+            res = "The number of entries in the database is to small to determine statistics :("
+
+        return render_template("statistics.html", res=res, mean=mean, difvals=difvals)
 
 
 @app.route("/adjust-brightness")
@@ -184,11 +243,11 @@ def submitData():
         state = info[0]
         light_val = int(info[1])
 
-        # becul meu e prea vechi si nu ii pot afla programatic temperatura culorii; 2700 e valoarea din specificatii
+        # bec-ul meu e prea vechi si nu ii pot afla programatic temperatura culorii; 2700 e valoarea din specificatii
         # color_temp = int(info[2])
         color_temp = 2700
 
-        light_int = data.get('light_intensity')
+        light_int = data.get("light_intensity")
 
         if light_int is None:
             return jsonify({"error": "Missing some data"}), 400
@@ -286,4 +345,4 @@ def currentStatus():
 
 if __name__ == "__main__":
     initDB()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(ssl_context=('cert.pem', 'key.pem'), debug=True, host='0.0.0.0', port=5000)
