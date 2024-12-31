@@ -9,6 +9,7 @@
 </head>
 <body>
     <h1>Evolution of light intensity in time, based on data stored in the database</h1>
+    <button><a href="{{ url_for('showStatistics') }}">See data statistics here</a></button>
     <canvas id="myChart" width="400" height="200"></canvas>
     <script>
         $(document).ready(function() {
@@ -67,7 +68,7 @@
 
                     myChart.data.labels = labels;
                     myChart.data.datasets[1].data = lightValues;
-                     myChart.data.datasets[0].data = lightIntensities;
+                    myChart.data.datasets[0].data = lightIntensities;
                     myChart.data.datasets[2].data = states;
                     myChart.update();
                 });
