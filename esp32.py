@@ -87,4 +87,4 @@ if wlan.isconnected():
         send_to_socket(sock, payload)
         sock.close()
 
-        time.sleep(1)
+        time.sleep(60)
