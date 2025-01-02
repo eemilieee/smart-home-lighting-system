@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart home lighting system</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
 {% block body %}
-     <p> {{ res }} </p>
-     <p> {{ mean }} </p>
-     <p> {{ difvals }} </p>
+     <p class="message"> {{ res }} </p>
+     <p class="message"> {{ mean }} </p>
+     <p class="message"> {{ difvals }} </p>
 {% endblock %}
 </body>
 </html>

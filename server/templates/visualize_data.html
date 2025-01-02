@@ -6,6 +6,7 @@
     <title>Smart home lighting system</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
     <h1>Evolution of light intensity in time, based on data stored in the database</h1>
@@ -68,7 +69,7 @@
 
                     myChart.data.labels = labels;
                     myChart.data.datasets[1].data = lightValues;
-                    myChart.data.datasets[0].data = lightIntensities;
+                     myChart.data.datasets[0].data = lightIntensities;
                     myChart.data.datasets[2].data = states;
                     myChart.update();
                 });

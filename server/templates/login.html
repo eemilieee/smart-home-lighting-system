@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart home lighting system</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
 {% block content %}
     <h1>Login using the light bulb's IP address and token</h1>
     <form method="post">
         <label for="ip">IP address</label>
-        <br>
         <input type="text" name="ip" size="20"
                placeholder="IP address"
                value="{{ request.form['ip'] }}" />
-        <br>
-
         <label for="token">Token</label>
-        <br>
         <input type="text" name="token" size="35"
                placeholder="Token"
                value="{{ request.form['token'] }}" />
-        <br>
+        <label for="bot_token">Telegram bot token needed to send notifications</label>
+        <input type="text" name="bot_token" size="55"
+               placeholder="Telegram bot token (optional)"
+               value="{{ request.form['bot_token'] }}" />
+        <label for="chat_id">Telegram chat ID where notifications are sent</label>
+        <input type="text" name="chat_id" size="20"
+               placeholder="Telegram chat ID (optional)"
+               value="{{ request.form['chat_id'] }}" />
         <button type="submit">Submit</button>
     </form>
 {% endblock %}

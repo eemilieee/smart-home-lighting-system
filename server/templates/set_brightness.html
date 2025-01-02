@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart home lighting system</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
 {% block content %}
     <h1>Enter the desired brightness value for the lightbulb</h1>
     <form method="post">
         <label for="brightness">Brightness value</label>
-        <br>
         <input type="number" min="1" max="100" name="brightness"
                value="{{ request.form['brightness'] }}" />
-        <br>
         <button type="submit">Submit</button>
+        <button style="margin-top: 24px;"><a href="{{ url_for('adjustBrightness') }}">Adjust the brightness automatically!</a></button>
     </form>
-    <br>
-    <br>
-    <button><a href="{{ url_for('adjustBrightness') }}">Adjust the brightness automatically!</a></button>
 {% endblock %}
 </body>
 </html>

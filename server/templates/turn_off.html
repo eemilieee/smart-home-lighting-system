@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart home lighting system</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
 {% block body %}
     {% if err == false %}
-     <p> The lightbulb is now turned off! </p>
+     <p class="message"> The lightbulb is now turned off! </p>
     {% else %}
-     <p> {{ res }} </p>
+     <p class="message"> {{ res }} </p>
     {% endif %}
 {% endblock %}
 </body>

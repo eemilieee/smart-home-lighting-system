@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart home lighting system</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+</head>
+<body>
     <h1>These are the main operations you can apply to the smart light bulb:</h1>
     <ul>
         <li><button><a href="{{ url_for('turnOn') }}">Turn on the lightbulb</a></button></li>
@@ -12,8 +15,5 @@
         <li><button><a href="{{ url_for('showGraph') }}">Find out light intensity graph</a></button></li>
         <li><button><a href="{{ url_for('twinkle') }}">Twinkle!</a></button></li>
     </ul>
-</head>
-<body>
-
 </body>
 </html>
