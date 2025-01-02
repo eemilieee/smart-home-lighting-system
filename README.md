@@ -45,6 +45,7 @@ Pentru afisarea graficului s-a folosit framework-ul Chart.js, intrucat este usor
 - `/server` -> contine toate fisierele necesare rularii serverului Flask pe laptop-ul personal;
 - `server/main.py` -> contine toata logica necesara definirii rutelor serverului, instantierii bazei de date si a primirii datelor de la microcontroller; **acesta este script-ul care se ruleaza pentru a pune in functiune serverul**;
 - `/server/templates` -> contine scheletele HTML asociate paginilor web si a rutelor definite pentru server;
+- `/static/styles/style.css` -> contine stilul global aplicat scheletelor HTML
 - `/server/schema.py` -> defineste structura bazei de date in care sunt introduse valorile citite de catre microcontroller;
 - `esp32.py` -> contine script-ul de MicroPython ce se urca pe microcontroller-ul de tip ESP32 pentru citirea datelor de la senzor si trimiterea lor la server pentru a fi stocate in baza de date.
 
