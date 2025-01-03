@@ -51,3 +51,6 @@ Pentru afisarea graficului s-a folosit framework-ul Chart.js, intrucat este usor
 
 ## Prequisites (de instalare)
 Comenzile catre actuator sunt trimise cu ajutorul package-ului Python [de aici](https://github.com/rytilahti/python-miio), care trebuie instalat in prealabil alaturi de [Flask](https://pypi.org/project/Flask/) cu parametrul `[async]` si de pachetul necesar modelului ARIMA de estimare a urmatoarei valori a intensitatii luminoase din incapere: [statsmodel](https://www.statsmodels.org/dev/install.html) pe laptop-ul personal.
+
+## Demo
+Modul de functionare al retelei poate fi vizualizat [aici](https://www.youtube.com/watch?v=8Lx-GiXtaKc).
