@@ -54,3 +54,15 @@ Comenzile catre actuator sunt trimise cu ajutorul package-ului Python [de aici](
 
 ## Demo
 Modul de functionare al retelei poate fi vizualizat [aici](https://www.youtube.com/watch?v=8Lx-GiXtaKc).
+
+## Bibliografie
+- https://www.geeksforgeeks.org/how-to-use-web-forms-in-a-flask-application/
+- https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python/
+- https://www.w3schools.com/Css/
+- https://www.digitalocean.com/community/tutorials/how-to-use-an-sqlite-database-in-a-flask-application
+- https://www.w3schools.com/js/js_graphics_chartjs.asp
+- https://stackoverflow.com/questions/22259847/application-not-picking-up-css-file-flask-python
+- https://www.i-programmer.info/programming/148-hardware/17133-esp32-in-micropython-ssl-sockets.html
+- https://www.geeksforgeeks.org/flask-rendering-templates/
+- https://pynative.com/python-post-json-using-requests-library/
+- https://usavps.com/blog/73820/
